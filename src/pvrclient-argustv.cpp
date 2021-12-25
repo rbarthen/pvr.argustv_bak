@@ -871,6 +871,9 @@ PVR_ERROR cPVRClientArgusTV::SetRecordingPlayCount(const kodi::addon::PVRRecordi
 PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& recording,
                                    std::vector<kodi::addon::PVREDLEntry>& edl)
 {
+  if (!FindRecEntryUNC(recording.GetRecordingId(), _streamFileName))
+    return PVR_ERROR_SERVER_ERROR;
+
   if (!_streamFileName.empty()) // read the edl for the current stream file
   {
     // see if edl file for currently streaming recording exists
