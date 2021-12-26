@@ -708,11 +708,11 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
             {
               kodi::addon::PVRRecording tag;
 
-              if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
+              /*if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
               {
                 tag.SetSeriesNumber(recording.SeriesNumber());
                 tag.SetEpisodeNumber(recording.EpisodeNumber());
-              }
+              }*/
 
               tag.SetRecordingId(recording.RecordingId());
               tag.SetChannelName(recording.ChannelDisplayName());
@@ -729,15 +729,36 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 tag.SetDirectory(
                     recordinggroup
                         .ProgramTitle()); //used in Kodi as directory structure below "Server X - hostname"
-                //tag.SetDirectory(recording.RecordingFileName());
-                kodi::Log(ADDON_LOG_INFO, "Bob -Recording Directory: %s", recordinggroup.ProgramTitle() );
               }
               else
               {
                 recording.Transform(false);
                 tag.SetDirectory("");
               }
-              tag.SetTitle(recording.Title());
+              string displayTitle = recording.Title();
+              if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
+              {
+                string series = to_string(recording.SeriesNumber());
+                if (recording.SeriesNumber()<10)
+				{
+                  series = "S0" + series;
+				}
+                else
+				{
+                  series = "S" + series;
+				}
+                string episode = to_string(recording.EpisodeNumber());
+                if (recording.EpisodeNumber() < 10)
+                {
+                  episode = "E0" + series;
+                }
+                else
+                {
+                  episode = "E" + series;
+                }
+                displayTitle = series + episode + " " + displayTitle
+              }
+              tag.SetTitle(displayTitle);
               tag.SetPlotOutline(recording.SubTitle());
 
               m_RecordingsMap[tag.GetRecordingId()] = recording.RecordingFileName();
