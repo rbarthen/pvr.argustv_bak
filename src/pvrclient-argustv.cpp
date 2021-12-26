@@ -729,7 +729,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 //tag.SetDirectory(
                 //    recordinggroup
                 //        .ProgramTitle()); //used in Kodi as directory structure below "Server X - hostname"
-                tag.SetDirectory(recording.RecordingFileName())
+                tag.SetDirectory(recording.RecordingFileName());
               }
               else
               {
