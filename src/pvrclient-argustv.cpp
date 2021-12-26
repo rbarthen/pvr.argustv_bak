@@ -685,7 +685,6 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
   retval = m_rpc.GetRecordingGroupByTitle(recordinggroupresponse);
   if (retval >= 0)
   {
-    kodi::Log(ADDON_LOG_DEBUG, recordinggroupresponse.toStyledString().c_str());
     // process list of recording groups
     int size = recordinggroupresponse.size();
     for (int recordinggroupindex = 0; recordinggroupindex < size; ++recordinggroupindex)
@@ -708,8 +707,13 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
             {
               kodi::addon::PVRRecording tag;
 
-              tag.SetSeriesNumber(PVR_RECORDING_INVALID_SERIES_EPISODE);
-              tag.SetEpisodeNumber(PVR_RECORDING_INVALID_SERIES_EPISODE);
+			  kodi::Log(ADDON_LOG_INFO, "BOB - Recording Title: %d, Series: %d, Episode: %d .",
+                        recording.Title,
+						recording.SeriesNumber,
+						recording.EpisodeNumber);
+
+              tag.SetSeriesNumber(recording.SeriesNumber);
+              tag.SetEpisodeNumber(recording.EpisodeNumber);
 
               tag.SetRecordingId(recording.RecordingId());
               tag.SetChannelName(recording.ChannelDisplayName());
