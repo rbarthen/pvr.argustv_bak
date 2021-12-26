@@ -892,7 +892,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& re
     kodi::Log(ADDON_LOG_DEBUG, "Opening EDL file: '%s'", theEdlFile.c_str());
 
     kodi::vfs::CFile fileHandle;
-    if (fileHandle.OpenFile(theEdlFile.c_str()))
+    if (fileHandle.OpenFile(theEdlFile))
     {
       std::string svals;
       while (fileHandle.ReadLine(svals))
