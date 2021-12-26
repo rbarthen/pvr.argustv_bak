@@ -693,7 +693,6 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
       cRecordingGroup recordinggroup;
       if (recordinggroup.Parse(recordinggroupresponse[recordinggroupindex]))
       {
-		std::string subTitle = recordinggroupresponse[recordinggroupindex]["SubTitle"].asString();
         Json::Value recordingsbytitleresponse;
         retval = m_rpc.GetFullRecordingsForTitle(recordinggroup.ProgramTitle(),
                                                  recordingsbytitleresponse);
@@ -736,6 +735,12 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 recording.Transform(false);
                 tag.SetDirectory("");
               }
+
+			  std::vector<std::string> titles = Utils::Split(recordinggroup.ProgramTitle(), "-"); 
+			  std::string subTitle = "";
+			  if (titles.size() > 1){
+                 subTitle = titles[1];
+			  }
               std::string displayTitle = recordinggroup.ProgramTitle();
               if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
               {
