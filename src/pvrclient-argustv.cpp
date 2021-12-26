@@ -707,10 +707,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
             {
               kodi::addon::PVRRecording tag;
 
-			  kodi::Log(ADDON_LOG_INFO, "BOB - Recording Title: %d, Series: %d, Episode: %d .",
-                        recording.Title,
-						recording.SeriesNumber,
-						recording.EpisodeNumber);
+			  kodi::Log(ADDON_LOG_INFO, "BOB - Recording Title: %s, Series: %d, Episode: %d .", recording.Title, recording.SeriesNumber, recording.EpisodeNumber);
 
               tag.SetSeriesNumber(recording.SeriesNumber);
               tag.SetEpisodeNumber(recording.EpisodeNumber);
