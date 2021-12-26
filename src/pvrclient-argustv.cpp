@@ -20,8 +20,8 @@
 #include "upcomingrecording.h"
 #include "utils.h"
 
-#include <kodi/General.h>
 #include <chrono>
+#include <kodi/General.h>
 #include <map>
 #include <thread>
 
@@ -31,7 +31,8 @@ using namespace ArgusTV;
 #define MAXLIFETIME \
   99 //Based on VDR addon and VDR documentation. 99=Keep forever, 0=can be deleted at any time, 1..98=days to keep
 
-template<typename T> void SafeDelete(T*& p)
+template<typename T>
+void SafeDelete(T*& p)
 {
   if (p)
   {
@@ -707,8 +708,11 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
             {
               kodi::addon::PVRRecording tag;
 
-              tag.SetSeriesNumber(recording.SeriesNumber());
-              tag.SetEpisodeNumber(recording.EpisodeNumber());
+              if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
+              {
+                tag.SetSeriesNumber(recording.SeriesNumber());
+                tag.SetEpisodeNumber(recording.EpisodeNumber());
+              }
 
               tag.SetRecordingId(recording.RecordingId());
               tag.SetChannelName(recording.ChannelDisplayName());
@@ -752,7 +756,8 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
     }
   }
   auto totalTime = std::chrono::system_clock::now() - startTime;
-  kodi::Log(ADDON_LOG_INFO, "Retrieving %d recordings took %d milliseconds.", iNumRecordings, std::chrono::duration_cast<std::chrono::milliseconds>(totalTime).count());
+  kodi::Log(ADDON_LOG_INFO, "Retrieving %d recordings took %d milliseconds.", iNumRecordings,
+            std::chrono::duration_cast<std::chrono::milliseconds>(totalTime).count());
   return PVR_ERROR_NO_ERROR;
 }
 
@@ -870,7 +875,7 @@ PVR_ERROR cPVRClientArgusTV::SetRecordingPlayCount(const kodi::addon::PVRRecordi
 }
 
 PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& recording,
-                                   std::vector<kodi::addon::PVREDLEntry>& edl)
+                                             std::vector<kodi::addon::PVREDLEntry>& edl)
 {
   if (!FindRecEntryUNC(recording.GetRecordingId(), _streamFileName))
     return PVR_ERROR_SERVER_ERROR;
@@ -890,7 +895,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& re
     }
     theEdlFile.append(".edl");
 
-	std::string CIFSname = ToCIFS(theEdlFile);
+    std::string CIFSname = ToCIFS(theEdlFile);
     kodi::Log(ADDON_LOG_DEBUG, "CIFS edl file: '%s'", CIFSname.c_str());
     theEdlFile = CIFSname;
 
@@ -1426,7 +1431,8 @@ bool cPVRClientArgusTV::OpenLiveStream(const kodi::addon::PVRChannel& channelinf
   auto startTime = std::chrono::system_clock::now();
   bool rc = _OpenLiveStream(channelinfo);
   auto totalTime = std::chrono::system_clock::now() - startTime;
-  kodi::Log(ADDON_LOG_INFO, "Opening live stream took %d milliseconds.", std::chrono::duration_cast<std::chrono::milliseconds>(totalTime).count());
+  kodi::Log(ADDON_LOG_INFO, "Opening live stream took %d milliseconds.",
+            std::chrono::duration_cast<std::chrono::milliseconds>(totalTime).count());
   return rc;
 }
 
