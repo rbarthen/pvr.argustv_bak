@@ -750,13 +750,13 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 std::string episode = std::to_string(recording.EpisodeNumber());
                 if (recording.EpisodeNumber() < 10)
                 {
-                  episode = "E0" + series;
+                  episode = "E0" + episode;
                 }
                 else
                 {
-                  episode = "E" + series;
+                  episode = "E" + episode;
                 }
-                displayTitle = series + episode + " " + displayTitle;
+                displayTitle = series + episode + " - " + displayTitle;
               }
               tag.SetTitle(displayTitle);
               tag.SetPlotOutline(recording.SubTitle());
