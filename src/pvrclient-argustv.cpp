@@ -726,10 +726,11 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
               if (nrOfRecordings > 1 || m_base.GetSettings().UseFolder())
               {
                 recording.Transform(true);
-                //tag.SetDirectory(
-                //    recordinggroup
-                //        .ProgramTitle()); //used in Kodi as directory structure below "Server X - hostname"
-                tag.SetDirectory(recording.RecordingFileName());
+                tag.SetDirectory(
+                    recordinggroup
+                        .ProgramTitle()); //used in Kodi as directory structure below "Server X - hostname"
+                //tag.SetDirectory(recording.RecordingFileName());
+                kodi::Log(ADDON_LOG_INFO, "Bob -Recording Directory: %s", recordinggroup.ProgramTitle() );
               }
               else
               {
