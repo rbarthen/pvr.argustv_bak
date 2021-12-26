@@ -685,8 +685,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
   retval = m_rpc.GetRecordingGroupByTitle(recordinggroupresponse);
   if (retval >= 0)
   {
-    Json::FastWriter fastWriter;
-    kodi::Log(ADDON_LOG_DEBUG, fastWriter.write(recordinggroupresponse));
+    kodi::Log(ADDON_LOG_DEBUG, recordinggroupresponse.toStyledString());
     // process list of recording groups
     int size = recordinggroupresponse.size();
     for (int recordinggroupindex = 0; recordinggroupindex < size; ++recordinggroupindex)
