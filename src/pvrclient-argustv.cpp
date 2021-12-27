@@ -768,13 +768,10 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 displayTitle = displayTitle + " - " +  subTitle;
 			  }
               
-              //tag.SetTitle(displayTitle);
-              tag.SetTitle(recording.Title());
+              tag.SetTitle(displayTitle);
               tag.SetPlotOutline(recording.SubTitle());
 
-			  std::string uncfile = "";
-              FindRecEntryUNC(tag.GetRecordingId(), uncfile);
-              m_RecordingsMap[tag.GetRecordingId()] = uncfile;
+              m_RecordingsMap[tag.GetRecordingId()] = recording.RecordingFileName();
 
               /* TODO: PVR API 5.0.0: Implement this */
               tag.SetChannelUid(PVR_CHANNEL_INVALID_UID);
