@@ -773,7 +773,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
               tag.SetPlotOutline(recording.SubTitle());
 
 			  std::string uncfile = "";
-              FindRecEntryUNC(recording.GetRecordingId(), uncfile);
+              FindRecEntryUNC(tag.GetRecordingId(), uncfile);
               m_RecordingsMap[tag.GetRecordingId()] = uncfile;
 
               /* TODO: PVR API 5.0.0: Implement this */
