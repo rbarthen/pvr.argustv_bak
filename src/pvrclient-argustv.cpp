@@ -713,7 +713,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 tag.SetSeriesNumber(recording.SeriesNumber());
                 tag.SetEpisodeNumber(recording.EpisodeNumber());
               }*/
-
+			  
               tag.SetRecordingId(recording.RecordingId());
               tag.SetChannelName(recording.ChannelDisplayName());
               tag.SetLifetime(MAXLIFETIME); //TODO: recording.Lifetime());
@@ -769,6 +769,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
 			  }
               
               tag.SetTitle(displayTitle);
+              tag.SetEpisodeName(recording.Title());
               tag.SetPlotOutline(recording.SubTitle());
 
               m_RecordingsMap[tag.GetRecordingId()] = recording.RecordingFileName();
