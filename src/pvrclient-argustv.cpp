@@ -736,6 +736,11 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 tag.SetDirectory("");
               }
 
+			  std::vector<std::string> titles = Utils::Split(recording.Title(), "-"); 
+			  std::string subTitle = "";
+			  if (titles.size() > 1){
+                 subTitle = titles[1];
+			  }
               std::string displayTitle = recordinggroup.ProgramTitle();
               if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
               {
@@ -759,8 +764,8 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 }
                 displayTitle = displayTitle + " - " + series + episode;
               }
-              if (recording.SubTitle().length() > 0){
-                displayTitle = displayTitle + " - " + recording.SubTitle();
+              if (subTitle.length() > 0){
+                displayTitle = displayTitle + " - " +  subTitle;
 			  }
               
               tag.SetTitle(displayTitle);
