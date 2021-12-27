@@ -770,7 +770,6 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
               
               tag.SetTitle(displayTitle);
               /*tag.SetTitle(recording.Title());*/
-
               tag.SetEpisodeName(recording.Title());
               tag.SetPlotOutline(recording.SubTitle());
 
