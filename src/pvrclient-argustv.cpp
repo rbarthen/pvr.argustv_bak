@@ -911,7 +911,7 @@ PVR_ERROR cPVRClientArgusTV::SetRecordingPlayCount(const kodi::addon::PVRRecordi
 PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& recording,
                                              std::vector<kodi::addon::PVREDLEntry>& edl)
 {
-  if (!FindRecEntryUNC(recording.GetRecordingId(), _streamFileName))
+  if (!FindRecEntry(recording.GetRecordingId(), _streamFileName))
     return PVR_ERROR_SERVER_ERROR;
 
   if (!_streamFileName.empty()) // read the edl for the current stream file
@@ -929,9 +929,9 @@ PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& re
     }
     theEdlFile.append(".edl");
 
-    std::string CIFSname = ToCIFS(theEdlFile);
+   /* std::string CIFSname = ToCIFS(theEdlFile);
     kodi::Log(ADDON_LOG_DEBUG, "CIFS edl file: '%s'", CIFSname.c_str());
-    theEdlFile = CIFSname;
+    theEdlFile = CIFSname;*/
 
     kodi::Log(ADDON_LOG_DEBUG, "Opening EDL file: '%s'", theEdlFile.c_str());
 
