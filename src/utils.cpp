@@ -135,6 +135,7 @@ bool Str2Bool(const std::string& str)
   return str.compare("True") == 0 ? true : false;
 }
 
+// Split function borrowed from pvr.wmc for GetRecordingEdl
 std::vector<std::string> Split(const std::string& input,
                                const std::string& delimiter,
                                unsigned int iMaxStrings /* = 0 */)

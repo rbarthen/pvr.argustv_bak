@@ -708,6 +708,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
             {
               kodi::addon::PVRRecording tag;
 
+              // comment out series and episode because it has been added to the title
               /*if (recording.SeriesNumber() > 0 && recording.EpisodeNumber() > 0)
               {
                 tag.SetSeriesNumber(recording.SeriesNumber());
@@ -736,6 +737,7 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
                 tag.SetDirectory("");
               }
 
+              // split recording title into primary title and subtitle so that series and episode can be inserted in between for preferred series and episode sorting
 			  std::vector<std::string> titles = Utils::Split(recording.Title(), " - "); 
 			  std::string subTitle = "";
 			  if (titles.size() > 1){
@@ -746,31 +748,25 @@ PVR_ERROR cPVRClientArgusTV::GetRecordings(bool deleted,
               {
                 std::string series = std::to_string(recording.SeriesNumber());
                 if (recording.SeriesNumber() < 10)
-				{
                   series = "S0" + series;
-				}
                 else
-				{
                   series = "S" + series;
-				}
+
                 std::string episode = std::to_string(recording.EpisodeNumber());
                 if (recording.EpisodeNumber() < 10)
-                {
                   episode = "E0" + episode;
-                }
                 else
-                {
                   episode = "E" + episode;
-                }
+
                 displayTitle = displayTitle + " - " + series + episode;
               }
-              if (subTitle.length() > 0){
+              if (subTitle.length() > 0)
                 displayTitle = displayTitle + " - " +  subTitle;
-			  }
               
+              //tag.SetTitle(recording.Title());
+              //use custom title instead of recording title to provide preferred sorting by series and episode instead of episode subtitle
               tag.SetTitle(displayTitle);
-              /*tag.SetTitle(recording.Title());*/
-              /*tag.SetEpisodeName(recording.Title());*/
+              
               tag.SetPlotOutline(recording.SubTitle());
 
               m_RecordingsMap[tag.GetRecordingId()] = recording.RecordingFileName();
@@ -908,6 +904,7 @@ PVR_ERROR cPVRClientArgusTV::SetRecordingPlayCount(const kodi::addon::PVRRecordi
   return PVR_ERROR_NO_ERROR;
 }
 
+// GetRecordingEdl source borrowed from pvr.wmc
 PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& recording,
                                              std::vector<kodi::addon::PVREDLEntry>& edl)
 {
@@ -928,10 +925,6 @@ PVR_ERROR cPVRClientArgusTV::GetRecordingEdl(const kodi::addon::PVRRecording& re
       return PVR_ERROR_FAILED;
     }
     theEdlFile.append(".edl");
-
-   /* std::string CIFSname = ToCIFS(theEdlFile);
-    kodi::Log(ADDON_LOG_DEBUG, "CIFS edl file: '%s'", CIFSname.c_str());
-    theEdlFile = CIFSname;*/
 
     kodi::Log(ADDON_LOG_DEBUG, "Opening EDL file: '%s'", theEdlFile.c_str());
 
